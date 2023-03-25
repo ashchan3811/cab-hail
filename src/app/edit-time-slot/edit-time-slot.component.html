@@ -1,0 +1,66 @@
+<h1 mat-dialog-title>Slot: {{slot.name}}</h1>
+<div mat-dialog-content>
+  <div class="header">
+    <h3>Booking Persons</h3>
+    <button mat-icon-button color="primary" aria-label="Add" (click)="add()">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Sr. No</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of slot.booking_persons; let i = index">
+        <ng-container *ngIf="!p.is_new">
+          <td>
+            {{ i + 1}}
+          </td>
+          <td>
+            {{p.name}}
+          </td>
+          <td>
+            {{p.phone}}
+          </td>
+          <td (click)="remove(i)" *ngIf="is_admin">
+            <button mat-icon-button color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+          <td *ngIf="!is_admin">
+            &nbsp;
+          </td>
+        </ng-container>
+        <ng-container *ngIf="p.is_new">
+          <td>
+            {{ i + 1}}
+          </td>
+          <td>
+            <input class="form-control form-control-sm" type="text" placeholder="Name" id="inputSmall-Name"
+              [(ngModel)]="p.name">
+          </td>
+          <td>
+            <input class="form-control form-control-sm" type="text" placeholder="Phone" id="inputSmall-Phone"
+              [(ngModel)]="p.phone">
+          </td>
+          <td (click)="save(i)">
+            <button mat-icon-button color="primary">
+              <mat-icon>save</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="ok()">Ok</button>
+</div>

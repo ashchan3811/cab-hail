@@ -1,22 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { ISlot } from './data.model';
 import { DataService } from './data.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditTimeSlotComponent } from './edit-time-slot/edit-time-slot.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'cab-hail';
+    title = 'cab-hail';
 
-  slots: ISlot[] = [];
+    slots: ISlot[] = [];
 
-  constructor(private dataService: DataService) {}
+    constructor(private dataService: DataService, private dialog: MatDialog, private snackbar: MatSnackBar) {}
 
-  ngOnInit(): void {
-    this.dataService.getSlots().subscribe((data) => {
-      this.slots = data;
-    });
-  }
+    ngOnInit(): void {
+        this.dataService.getSlots().subscribe((data) => {
+            this.slots = data;
+        });
+    }
+
+    edit(slot: ISlot) {
+        this.dialog
+            .open(EditTimeSlotComponent, {
+                data: {
+                    slot: JSON.parse(JSON.stringify(slot)),
+                },
+                width: '500px',
+            })
+            .afterClosed()
+            .subscribe((response) => {
+                if (response) {
+                    slot = { ...response };
+                    this.snackbar.open('Updated!', 'Close');
+                }
+            });
+    }
 }
