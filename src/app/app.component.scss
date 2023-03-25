@@ -354,3 +354,8 @@ svg#clouds {
     display: flex;
     justify-content: center;
 }
+
+.mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+    flex-direction: column !important;
+}
