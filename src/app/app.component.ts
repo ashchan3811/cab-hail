@@ -20,10 +20,12 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.dataService.getSlots().subscribe((data) => {
             this.slots = data;
+
+            this.processSlots();
         });
     }
 
-    edit(slot: ISlot) {
+    edit(slot: ISlot, index: number) {
         this.dialog
             .open(EditTimeSlotComponent, {
                 data: {
@@ -34,9 +36,19 @@ export class AppComponent implements OnInit {
             .afterClosed()
             .subscribe((response) => {
                 if (response) {
-                    slot = { ...response };
+                    this.slots[index] = JSON.parse(JSON.stringify(response));
+
                     this.snackbar.open('Updated!', 'Close');
+
+                    this.processSlots();
                 }
             });
+    }
+
+    processSlots() {
+        this.slots.forEach((a) => {
+            a.booking_persons = a.booking_persons || [];
+            a.style_name = `slot-${a.booking_persons.length}`;
+        });
     }
 }

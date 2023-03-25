@@ -2,6 +2,7 @@ export interface ISlot {
     _id: number;
     name: string;
     booking_persons: Array<ISlotBookingPerson>;
+    style_name?: string;
 }
 
 export interface ISlotBookingPerson {

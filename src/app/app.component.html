@@ -22,10 +22,14 @@
   </div>
 
   <div class="bookings" role="main">
-    <ng-container *ngFor="let slot of slots">
-      <mat-card class="booking-slot" (click)="edit(slot)">
+    <ng-container *ngFor="let slot of slots; let i = index">
+      <mat-card class="booking-slot" [ngClass]="slot.style_name" (click)="edit(slot, i)">
         <mat-card-content>
           {{ slot.name }}
+
+          <div class="slot-status">
+            {{slot.booking_persons.length}} / 4
+          </div>
         </mat-card-content>
       </mat-card>
     </ng-container>

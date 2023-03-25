@@ -36,18 +36,23 @@ export class EditTimeSlotComponent implements OnInit {
 
     add() {
         this.slot.booking_persons = this.slot.booking_persons || [];
-        this.slot.booking_persons.push({
-            _id: '',
-            name: '',
-            phone: '',
-            is_new: true,
-        });
+
+        if (this.slot.booking_persons.length < 4) {
+            this.slot.booking_persons.push({
+                _id: '',
+                name: '',
+                phone: '',
+                is_new: true,
+            });
+        } else {
+            this.snackbar.open('Max 4 persons allowed!', 'Close');
+        }
     }
 
     save(index: number) {
         const x = this.slot.booking_persons[index];
         if (x) {
-            if (x.name && x.phone) {
+            if (x.name) {
                 x.is_new = false;
                 this.snackbar.open('Saved!', 'Close');
             } else {
@@ -61,6 +66,11 @@ export class EditTimeSlotComponent implements OnInit {
     }
 
     ok() {
-        this.dialogRef.close({ ...this.slot });
+        const isValid = this.slot.booking_persons.every((a) => a.name);
+        if (isValid) {
+            this.dialogRef.close({ ...this.slot });
+        } else {
+            this.snackbar.open('Invalid data. Please provide valid data and try to save again! ', 'Close');
+        }
     }
 }
