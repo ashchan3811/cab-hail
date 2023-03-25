@@ -295,6 +295,7 @@ svg#clouds {
 .main-content {
     display: flex;
     margin-top: 60px;
+    padding: 0 20px;
 
     .left-menu {
         width: 25%;
@@ -355,7 +356,36 @@ svg#clouds {
     justify-content: center;
 }
 
-.mat-list-base .mat-list-item .mat-list-item-content,
-.mat-list-base .mat-list-option .mat-list-item-content {
-    flex-direction: column !important;
+.color-codes-list {
+    .color-code-item {
+        display: flex;
+        flex-direction: column !important;
+        margin-bottom: 20px;
+
+        .box {
+            border: 1px solid;
+            height: 20px;
+            width: 20px;
+
+            &.box-yellow {
+                border-color: yellow;
+                background-color: yellow;
+            }
+
+            &.box-yellow-green {
+                border-color: yellowgreen;
+                background-color: yellowgreen;
+            }
+
+            &.box-red {
+                border-color: red;
+                background-color: red;
+            }
+
+            &.box-green {
+                border-color: green;
+                background-color: green;
+            }
+        }
+    }
 }
